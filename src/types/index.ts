@@ -1,20 +1,24 @@
-export type ActivePage =
+export type ActiveTab =
   | 'dashboard'
   | 'explore'
   | 'navigation'
   | 'events'
-  | 'event-details'
   | 'about'
   | 'admin';
+
+export type ActivePage = ActiveTab | 'event-details';
+
+export type ViewPreset = 'isometric' | 'topdown' | 'gate';
 
 export interface CampusBuilding {
   id: string;
   code: string;
   name: string;
   shortName: string;
-  category: 'Entrance' | 'Academic' | 'Library' | 'Auditorium' | 'Cafeteria' | 'Sports' | 'Parking' | string;
+  category: string;
   position: [number, number, number];
   size: [number, number, number];
+  shape?: 'courtyard' | 'angled' | 'hostel' | 'turf' | 'elongated' | 'court' | 'dining' | 'park' | 'academic' | 'cafe' | 'twin' | string;
   color: string;
   accentColor: string;
   floors: string;
@@ -22,6 +26,7 @@ export interface CampusBuilding {
   description: string;
   beginnerTip: string;
   facilities: string[];
+  roadPoint?: [number, number, number];
   waypoints?: [number, number, number][];
 }
 
@@ -44,24 +49,38 @@ export interface CampusEvent {
   id: string;
   title: string;
   category: string;
+  badgeClass?: string;
+  venueId: string;
+  venueName?: string;
   date: string;
   time: string;
-  venueId: string;
+  attendees?: string;
   organizer: string;
-  status: 'Upcoming' | 'Completed' | string;
-  isSample: boolean;
-  featured: boolean;
-  registrationsCount: number;
-  posterTheme: string;
-  customPosterUrl?: string;
+  image?: string;
   description: string;
+  tags?: string[];
+  status?: 'Upcoming' | 'Completed' | string;
+  isSample?: boolean;
+  featured?: boolean;
+  registrationsCount?: number;
+  posterTheme?: string;
+  customPosterUrl?: string;
   agenda?: string[];
 }
 
 export interface RouteStep {
   title: string;
   detail: string;
-  icon: 'start' | 'walk' | 'straight' | 'turn' | 'finish';
+  icon?: 'start' | 'walk' | 'straight' | 'turn' | 'finish' | 'arrow' | 'destination' | string;
+}
+
+export interface RouteInfo {
+  distanceMeters: number;
+  durationMinutes: number;
+  calories: number;
+  steps: RouteStep[];
+  fromName: string;
+  toName: string;
 }
 
 export interface CampusRoute {
@@ -71,6 +90,29 @@ export interface CampusRoute {
   distanceMeters: number;
   walkMinutes: number;
   steps: RouteStep[];
+}
+
+export interface PassFormState {
+  name: string;
+  phone: string;
+  email: string;
+  purpose: string;
+  date: string;
+}
+
+export interface GeneratedPass {
+  code: string;
+}
+
+export interface AdminNewEvent {
+  title: string;
+  category: string;
+  venueId: string;
+  date: string;
+  time: string;
+  attendees: string;
+  organizer: string;
+  description: string;
 }
 
 export interface VisitorRegForm {
@@ -115,4 +157,3 @@ export interface ToastMessage {
   text: string;
   type: 'success' | 'info' | 'error';
 }
-

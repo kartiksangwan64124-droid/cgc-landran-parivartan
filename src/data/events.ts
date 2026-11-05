@@ -1,140 +1,132 @@
 import { CampusEvent } from '../types';
 
-// Sample Events Dataset (Explicitly marked as Sample / Demo Events)
-export const INITIAL_EVENTS: CampusEvent[] = [
+export const INITIAL_CGC_EVENTS = [
   {
-    id: 'evt-101',
-    title: 'TechHorizon 2025 – National AI & Robotics Expo',
-    category: 'Technical',
-    date: '2025-05-18',
-    time: '09:30 AM – 04:30 PM',
-    venueId: 'block-2',
-    organizer: 'Department of Computer Science & Innovation Cell',
+    id: 'evt-1',
+    title: 'PARIVARTAN 2026 - Annual National Mega Fest',
+    category: 'Cultural & Mega Fest',
+    badgeClass: 'bg-orange-100 text-orange-700 border-orange-200',
+    venueId: 'parivartan-ground',
+    venueName: 'Parivartan Ground (Main Stage)',
+    date: 'Nov 20 - Nov 21, 2026',
+    time: '5:00 PM – 10:00 PM',
+    attendees: '12,000+ Students',
+    organizer: 'CGC Central Student Affairs & Cultural Society',
+    image: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=800&q=80',
+    description:
+      'North India’s most anticipated annual collegiate festival! Featuring live celebrity musical concerts, grand fashion spectacles, EDM night, street plays, and cultural showcases from 80+ universities across India.',
+    tags: ['Celebrity Night', 'Fashion Runway', 'Battle of the Bands', 'Food Village'],
     status: 'Upcoming',
     isSample: true,
     featured: true,
-    registrationsCount: 142,
-    posterTheme: 'theme-indigo',
-    customPosterUrl: '',
-    description:
-      'A sample demonstration showcase of student-built autonomous rovers, generative AI prototypes, and interactive coding challenges designed for visiting high school students and freshers.',
-    agenda: [
-      '09:30 AM – Registration & Welcome Kit at Block 2 Foyer',
-      '10:15 AM – Live Robotics Arena Demonstration',
-      '12:00 PM – Hands-on Prompt Engineering Mini-Lab',
-      '02:30 PM – Project Pitch & Visitor Q&A'
-    ]
+    registrationsCount: 4200,
+    posterTheme: 'orange'
   },
   {
-    id: 'evt-102',
-    title: 'Fresher & Visiting School Student Campus Orientation',
-    category: 'Orientation',
-    date: '2025-05-20',
-    time: '10:00 AM – 01:00 PM',
-    venueId: 'auditorium',
-    organizer: 'Student Welfare & Admissions Guidance Wing',
+    id: 'evt-2',
+    title: 'HackCGC 2026: 36-Hour National Hackathon',
+    category: 'Technology & Coding',
+    badgeClass: 'bg-indigo-100 text-indigo-700 border-indigo-200',
+    venueId: 'block-11-10',
+    venueName: 'Block 11 & 10 (CEC Innovation Center)',
+    date: 'Nov 18 - Nov 19, 2026',
+    time: '9:00 AM (36 Hours Non-Stop)',
+    attendees: '600+ Developers',
+    organizer: 'Department of CSE & CEC ACM Student Chapter',
+    image: 'https://images.unsplash.com/photo-1504384308090-c894fdcc538d?auto=format&fit=crop&w=800&q=80',
+    description:
+      'Build AI, Web3, and smart campus solutions with over ₹3,00,000 in cash prizes. Cloud mentorship by Google Developer Experts and direct interview opportunities with hiring partners.',
+    tags: ['AI & ML', 'Web3', 'Hardware IoT', 'Cash Prizes'],
     status: 'Upcoming',
     isSample: true,
     featured: true,
-    registrationsCount: 310,
-    posterTheme: 'theme-emerald',
-    customPosterUrl: '',
-    description:
-      'Sample introductory session welcoming prospective students, parents, and school delegations. Includes an overview of academic tracks, campus life, and guided walking tours.',
-    agenda: [
-      '10:00 AM – Welcome Address at Main Auditorium',
-      '11:00 AM – Interactive Q&A with Senior Student Ambassadors',
-      '11:45 AM – Guided 3D & Physical Campus Walkthrough',
-      '12:30 PM – Refreshments at Central Cafeteria'
-    ]
+    registrationsCount: 680,
+    posterTheme: 'indigo'
   },
   {
-    id: 'evt-103',
-    title: 'Rhythm & Roots – Spring Cultural Fest Showcase',
-    category: 'Cultural',
-    date: '2025-05-24',
-    time: '02:00 PM – 07:00 PM',
-    venueId: 'auditorium',
-    organizer: 'Cultural Committee & Performing Arts Club',
+    id: 'evt-3',
+    title: 'TechInvent: National Innovation & Robotics Expo',
+    category: 'Innovation & Science',
+    badgeClass: 'bg-cyan-100 text-cyan-800 border-cyan-200',
+    venueId: 'block-1',
+    venueName: 'Block 1 (Central Auditorium & Foyer)',
+    date: 'Nov 25, 2026',
+    time: '10:00 AM – 4:30 PM',
+    attendees: '2,500+ Visitors',
+    organizer: 'Institution Innovation Council (IIC) & DST Cell',
+    image: 'https://images.unsplash.com/photo-1485827404703-89b55fcc595e?auto=format&fit=crop&w=800&q=80',
+    description:
+      'Showcase of 120+ student patents, robotic arena battles, drone racing, electric vehicle prototypes, and venture capital angel investor pitches.',
+    tags: ['Robotics', 'Drone Racing', 'Patent Exhibition', 'Investor Pitch'],
     status: 'Upcoming',
     isSample: true,
     featured: true,
-    registrationsCount: 275,
-    posterTheme: 'theme-orange',
-    customPosterUrl: '',
-    description:
-      'Sample cultural celebration featuring folk dances, battle of bands, theatre skits, and fine arts exhibitions in the Main Campus Auditorium.',
-    agenda: [
-      '02:00 PM – Inaugural Folk Dance Performance',
-      '03:30 PM – Acoustic & Fusion Band Showcase',
-      '05:00 PM – Theatre & Street Play Finals',
-      '06:30 PM – Prize Distribution Ceremony'
-    ]
+    registrationsCount: 1250,
+    posterTheme: 'cyan'
   },
   {
-    id: 'evt-104',
-    title: 'Full-Stack Web & Cloud Architecture Bootcamp',
-    category: 'Workshop',
-    date: '2025-05-27',
-    time: '11:00 AM – 03:30 PM',
-    venueId: 'library',
-    organizer: 'Digital Knowledge Center & Coding Guild',
+    id: 'evt-4',
+    title: 'CGC Premier League: Inter-College Cricket Cup',
+    category: 'Sports & Athletics',
+    badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-200',
+    venueId: 'coe-ground',
+    venueName: 'COE Ground (Sports Arena)',
+    date: 'Nov 27 - Nov 29, 2026',
+    time: '8:30 AM – 5:30 PM',
+    attendees: '3,000+ Spectators',
+    organizer: 'CGC Department of Physical Education & Sports',
+    image: 'https://images.unsplash.com/photo-1531415074968-036ba1b575da?auto=format&fit=crop&w=800&q=80',
+    description:
+      'The thrilling flagship T20 inter-department and inter-collegiate cricket tournament with live digital scoreboard, commentary, and trophy ceremony.',
+    tags: ['T20 Cricket', 'Cheer Squad', 'Trophy Ceremony', 'Sports Gala'],
     status: 'Upcoming',
     isSample: true,
     featured: false,
-    registrationsCount: 88,
-    posterTheme: 'theme-cyan',
-    customPosterUrl: '',
-    description:
-      'Sample beginner-friendly workshop held in the Central Library Digital Wing introducing modern React UI design, 3D web graphics, and cloud deployment.',
-    agenda: [
-      '11:00 AM – UI/UX Design Systems Overview',
-      '12:15 PM – Building Interactive Components',
-      '02:00 PM – Live Deployment Lab'
-    ]
+    registrationsCount: 890,
+    posterTheme: 'emerald'
   },
   {
-    id: 'evt-105',
-    title: 'Young Entrepreneurs & Startup Pitch Day',
-    category: 'Seminar',
-    date: '2025-06-02',
-    time: '10:30 AM – 02:30 PM',
-    venueId: 'block-4',
-    organizer: 'Entrepreneurship Development Cell (Block 4)',
+    id: 'evt-5',
+    title: 'Campus Food Carnival & Acoustic Lounge',
+    category: 'Lifestyle & Social',
+    badgeClass: 'bg-rose-100 text-rose-700 border-rose-200',
+    venueId: 'sip-n-bit',
+    venueName: 'Sip-n-bit (Food Court Terrace)',
+    date: 'Dec 02, 2026',
+    time: '12:00 PM – 8:00 PM',
+    attendees: '4,000+ Students',
+    organizer: 'CGC Youth & Hospitality Club',
+    image: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&w=800&q=80',
+    description:
+      'Artisanal coffee tasting, student chef pop-up stalls, acoustic guitar busking, board game tournaments, and evening bonfire acoustic vibes on the terrace.',
+    tags: ['Food Stalls', 'Acoustic Guitar', 'Boba Tea', 'Open Mic'],
     status: 'Upcoming',
     isSample: true,
     featured: false,
-    registrationsCount: 96,
-    posterTheme: 'theme-purple',
-    customPosterUrl: '',
-    description:
-      'Sample interactive seminar where student founders present retail, tech, and sustainability startup concepts to mentors and visiting students.',
-    agenda: [
-      '10:30 AM – Keynote: Idea to Campus Startup',
-      '11:30 AM – Student Startup Pitch Deck Round',
-      '01:15 PM – Networking & Mentor Feedback'
-    ]
+    registrationsCount: 1540,
+    posterTheme: 'rose'
   },
   {
-    id: 'evt-106',
-    title: 'Inter-Departmental Athletics & Basketball Meet',
-    category: 'Sports',
-    date: '2025-04-12',
-    time: '08:00 AM – 05:00 PM',
-    venueId: 'sports',
-    organizer: 'Department of Physical Education & Sports',
-    status: 'Completed',
+    id: 'evt-6',
+    title: 'BizWhiz 2026: Global Leadership Conclave',
+    category: 'Business & Management',
+    badgeClass: 'bg-purple-100 text-purple-700 border-purple-200',
+    venueId: 'block-3',
+    venueName: 'Block 3 (Executive Boardroom & Hall)',
+    date: 'Dec 05, 2026',
+    time: '11:00 AM – 3:30 PM',
+    attendees: '850+ Delegates',
+    organizer: 'Chandigarh Business School of Administration (CBSA)',
+    image: 'https://images.unsplash.com/photo-1515187029135-18ee286d815b?auto=format&fit=crop&w=800&q=80',
+    description:
+      'Keynote addresses by Fortune 500 CXOs, case study competitions, and mock investment banking pitch battles for aspiring entrepreneurs.',
+    tags: ['Keynote', 'Stock Pitch', 'Networking Lunch', 'Executive Panel'],
+    status: 'Upcoming',
     isSample: true,
     featured: false,
-    registrationsCount: 220,
-    posterTheme: 'theme-emerald',
-    customPosterUrl: '',
-    description:
-      'Sample completed sports tournament featuring 100m sprints, relay races, and floodlit basketball finals at the Sports Complex.',
-    agenda: [
-      '08:00 AM – Track & Field Heats',
-      '11:30 AM – Basketball Semi-Finals',
-      '03:30 PM – Championship Finals & Medals'
-    ]
+    registrationsCount: 420,
+    posterTheme: 'purple'
   }
 ];
+
+export const INITIAL_EVENTS: CampusEvent[] = INITIAL_CGC_EVENTS as any;

@@ -1,97 +1,169 @@
-import { CampusBuilding, CampusRoute, RouteStep } from '../types';
-import { CAMPUS_BUILDINGS } from '../data/buildings';
+import { CampusBuilding, CampusRoute } from '../types';
 
-/**
- * Helper utility: Route calculation & turn-by-turn walking generator
- */
-export function computeCampusRoute(startId: string, endId: string): CampusRoute | null {
-  const startB = CAMPUS_BUILDINGS.find((b) => b.id === startId);
-  const endB = CAMPUS_BUILDINGS.find((b) => b.id === endId);
-  if (!startB || !endB || startId === endId) return null;
+// Campus Waypoint Road Graph for Realistic Dijkstra Navigation
+export const ROAD_GRAPH: Record<string, { pos: [number, number, number]; neighbors: string[] }> = {
+  main_gate: { pos: [22, 0.35, -38], neighbors: ['junction_north'] },
+  junction_north: { pos: [10, 0.35, -20], neighbors: ['main_gate', 'junction_blk6', 'junction_blk3', 'junction_central'] },
+  junction_blk6: { pos: [-2, 0.35, -18], neighbors: ['junction_north', 'junction_kalpana'] },
+  junction_kalpana: { pos: [-14, 0.35, -16], neighbors: ['junction_blk6', 'junction_coe'] },
+  junction_coe: { pos: [-14, 0.35, -4], neighbors: ['junction_kalpana', 'junction_count', 'junction_blk11'] },
+  junction_blk11: { pos: [-26, 0.35, 6], neighbors: ['junction_coe', 'junction_parivartan'] },
+  junction_parivartan: { pos: [-11, 0.35, 18], neighbors: ['junction_blk11', 'junction_santhikunj', 'junction_snb'] },
+  junction_count: { pos: [-5, 0.35, -2], neighbors: ['junction_coe', 'junction_snb'] },
+  junction_central: { pos: [6, 0.35, -12], neighbors: ['junction_north', 'junction_snb', 'junction_cdx'] },
+  junction_blk3: { pos: [21, 0.35, -12], neighbors: ['junction_north', 'junction_cdx'] },
+  junction_cdx: { pos: [14, 0.35, -2], neighbors: ['junction_central', 'junction_blk3', 'junction_blk4', 'junction_snb'] },
+  junction_blk4: { pos: [24, 0.35, 1], neighbors: ['junction_cdx', 'junction_basera'] },
+  junction_snb: { pos: [2, 0.35, -2], neighbors: ['junction_central', 'junction_count', 'junction_parivartan', 'junction_herbel'] },
+  junction_basera: { pos: [15, 0.35, 7], neighbors: ['junction_blk4', 'junction_thomson', 'junction_herbel'] },
+  junction_herbel: { pos: [12, 0.35, 18], neighbors: ['junction_snb', 'junction_basera', 'junction_santhikunj'] },
+  junction_santhikunj: { pos: [10, 0.35, 27], neighbors: ['junction_herbel', 'junction_parivartan', 'junction_thomson'] },
+  junction_thomson: { pos: [23, 0.35, 19], neighbors: ['junction_basera', 'junction_santhikunj'] }
+};
 
-  // Build logical pedestrian pathway along the Central Spine (x = 0)
-  const startWp = startB.waypoints || [startB.position];
-  const endWp = [...(endB.waypoints || [endB.position])].reverse();
+// Map each building to its nearest entrance junction on the road
+export const BUILDING_TO_ROAD: Record<string, string> = {
+  'block-1': 'junction_north',
+  'block-6': 'junction_blk6',
+  'kalpana-hostel': 'junction_kalpana',
+  'coe-ground': 'junction_coe',
+  'block-11-10': 'junction_blk11',
+  'parivartan-ground': 'junction_parivartan',
+  'count': 'junction_count',
+  'sip-n-bit': 'junction_snb',
+  'central-park': 'junction_central',
+  'block-3': 'junction_blk3',
+  'cdx': 'junction_cdx',
+  'block-4-tagore': 'junction_blk4',
+  'basera-hostel': 'junction_basera',
+  'herbel-garden': 'junction_herbel',
+  'santhikunj-hostel': 'junction_santhikunj',
+  'block-8-thomson': 'junction_thomson'
+};
 
-  const startSpinePoint = startWp[startWp.length - 1];
-  const endSpinePoint = endWp[0];
+// Dijkstra Shortest Path Finder
+export function findShortestRoadPath(startJunction: string, endJunction: string): string[] {
+  if (startJunction === endJunction) return [startJunction];
 
-  const points3D = [
-    [startB.position[0], 0.35, startB.position[2]],
-    ...startWp,
-    [0, 0.35, startSpinePoint[2]],
-    [0, 0.35, endSpinePoint[2]],
-    ...endWp,
-    [endB.position[0], 0.35, endB.position[2]]
-  ];
+  const distances: Record<string, number> = {};
+  const previous: Record<string, string | null> = {};
+  const queue = new Set<string>(Object.keys(ROAD_GRAPH));
 
-  // Deduplicate consecutive close points
-  const cleanPoints = points3D.filter((pt, idx) => {
-    if (idx === 0) return true;
-    const prev = points3D[idx - 1];
-    const dist = Math.hypot(pt[0] - prev[0], pt[2] - prev[2]);
-    return dist > 0.5;
+  for (const node of Object.keys(ROAD_GRAPH)) {
+    distances[node] = Infinity;
+    previous[node] = null;
+  }
+  distances[startJunction] = 0;
+
+  while (queue.size > 0) {
+    let current: string | null = null;
+    let minDist = Infinity;
+    for (const node of queue) {
+      if (distances[node] < minDist) {
+        minDist = distances[node];
+        current = node;
+      }
+    }
+
+    if (!current || distances[current] === Infinity) break;
+    if (current === endJunction) break;
+
+    queue.delete(current);
+
+    const neighbors = ROAD_GRAPH[current]?.neighbors || [];
+    for (const neighbor of neighbors) {
+      if (!queue.has(neighbor)) continue;
+      const posA = ROAD_GRAPH[current].pos;
+      const posB = ROAD_GRAPH[neighbor].pos;
+      const d = Math.hypot(posA[0] - posB[0], posA[2] - posB[2]);
+      const alt = distances[current] + d;
+      if (alt < distances[neighbor]) {
+        distances[neighbor] = alt;
+        previous[neighbor] = current;
+      }
+    }
+  }
+
+  const path: string[] = [];
+  let curr: string | null = endJunction;
+  while (curr) {
+    path.unshift(curr);
+    curr = previous[curr];
+  }
+  return path.length > 1 && path[0] === startJunction ? path : [startJunction, endJunction];
+}
+
+// Generate turn-by-turn narrative instructions for visitors
+export function generateStepByStepDirections(startBuilding: any, endBuilding: any, pathJunctions: string[]) {
+  const steps: any[] = [];
+  steps.push({
+    title: `Start at ${startBuilding.name}`,
+    detail: `Exit the building foyer and proceed onto the campus road network toward ${startBuilding.shortName} junction.`,
+    icon: 'start'
   });
 
-  // Compute schematic distance & walk time
-  let totalUnits = 0;
-  for (let i = 1; i < cleanPoints.length; i++) {
-    totalUnits += Math.hypot(
-      cleanPoints[i][0] - cleanPoints[i - 1][0],
-      cleanPoints[i][2] - cleanPoints[i - 1][2]
-    );
-  }
-  const schematicMeters = Math.round(totalUnits * 6.5);
-  const walkMinutes = Math.max(1, Math.round(schematicMeters / 70));
+  for (let i = 0; i < pathJunctions.length - 1; i++) {
+    const curJ = pathJunctions[i];
+    const nxtJ = pathJunctions[i + 1];
+    const p1 = ROAD_GRAPH[curJ].pos;
+    const p2 = ROAD_GRAPH[nxtJ].pos;
+    const distMeters = Math.round(Math.hypot(p2[0] - p1[0], p2[2] - p1[2]) * 8);
 
-  // Generate beginner-friendly step-by-step walking directions
-  const steps: RouteStep[] = [
-    {
-      title: `Start at ${startB.name}`,
-      detail: `Exit the main doorway of ${startB.shortName} (${startB.code}) and join the paved pedestrian walkway.`,
-      icon: 'start'
-    }
-  ];
+    let instruction = `Continue along the paved pathway (${distMeters} m)`;
+    if (nxtJ.includes('central')) instruction = `Head toward the Central Park promenade past the green lawns (${distMeters} m)`;
+    else if (nxtJ.includes('snb')) instruction = `Walk toward the central Sip-n-bit dining hub (${distMeters} m)`;
+    else if (nxtJ.includes('coe')) instruction = `Follow the avenue flanking the COE Sports Ground (${distMeters} m)`;
+    else if (nxtJ.includes('cdx')) instruction = `Walk past CDX Cafe and outdoor lounge benches (${distMeters} m)`;
+    else if (nxtJ.includes('north')) instruction = `Approach the North Academic Ring near Block 1 (${distMeters} m)`;
+    else if (nxtJ.includes('parivartan')) instruction = `Head toward the Parivartan festival arena grounds (${distMeters} m)`;
 
-  if (Math.abs(startB.position[0]) > 5) {
     steps.push({
-      title: 'Join Central Academic Avenue',
-      detail: `Walk ${startB.position[0] < 0 ? 'east' : 'west'} along the connecting corridor toward the Central Spine Road.`,
-      icon: 'walk'
-    });
-  }
-
-  const zDiff = endB.position[2] - startB.position[2];
-  if (Math.abs(zDiff) > 6) {
-    steps.push({
-      title: `Head ${zDiff < 0 ? 'North (Up-Campus)' : 'South (Toward Main Gate)'} on Central Avenue`,
-      detail: `Follow the tree-lined central boulevard ${
-        Math.abs(zDiff) > 25 ? 'past the Central Plaza Fountain ' : ''
-      }for approximately ${Math.round(Math.abs(zDiff) * 5.5)}m.`,
-      icon: 'straight'
-    });
-  }
-
-  if (Math.abs(endB.position[0]) > 5) {
-    steps.push({
-      title: `Turn into the ${endB.position[0] < 0 ? 'West' : 'East'} Zone Pathway`,
-      detail: `Take the walkway leading toward ${endB.shortName} (look for the ${endB.category} signage badge ${endB.code}).`,
-      icon: 'turn'
+      title: `Step ${i + 1}: ${instruction}`,
+      detail: `Look for campus milestone signage. Paved road is illuminated and fully accessible.`,
+      icon: 'arrow'
     });
   }
 
   steps.push({
-    title: `Arrive at ${endB.name}`,
-    detail: `${endB.beginnerTip}`,
-    icon: 'finish'
+    title: `Arrive at ${endBuilding.name}`,
+    detail: `Enter through the primary glass portico. You have reached your destination (${endBuilding.floors}).`,
+    icon: 'destination'
   });
 
+  return steps;
+}
+
+export function computeCampusRoute(
+  startBuilding: CampusBuilding,
+  endBuilding: CampusBuilding
+): CampusRoute {
+  const startJunc = BUILDING_TO_ROAD[startBuilding.id] || 'junction_north';
+  const endJunc = BUILDING_TO_ROAD[endBuilding.id] || 'junction_snb';
+  const pathJunctions = findShortestRoadPath(startJunc, endJunc);
+
+  const points: [number, number, number][] = [
+    (startBuilding.roadPoint || startBuilding.position) as [number, number, number],
+    ...pathJunctions.map((j) => (ROAD_GRAPH[j]?.pos || [0, 0.35, 0]) as [number, number, number]),
+    (endBuilding.roadPoint || endBuilding.position) as [number, number, number]
+  ];
+
+  let totalDistMeters = 0;
+  for (let i = 0; i < points.length - 1; i++) {
+    const p1 = points[i];
+    const p2 = points[i + 1];
+    totalDistMeters += Math.hypot(p2[0] - p1[0], p2[2] - p1[2]) * 8;
+  }
+  const roundedDist = Math.round(totalDistMeters);
+  const walkMinutes = Math.max(1, Math.round(roundedDist / 70));
+
+  const steps = generateStepByStepDirections(startBuilding, endBuilding, pathJunctions);
+
   return {
-    startBuilding: startB,
-    endBuilding: endB,
-    points: cleanPoints as [number, number, number][],
-    distanceMeters: schematicMeters,
+    startBuilding,
+    endBuilding,
+    points,
+    distanceMeters: roundedDist,
     walkMinutes,
-    steps
+    steps: steps as any
   };
 }

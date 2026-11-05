@@ -1,14 +1,14 @@
 import { CampusCategory, PosterTheme } from '../types';
 
-// Initial Event Categories (Argon styled)
-export const INITIAL_CATEGORIES: CampusCategory[] = [
-  { id: 'cat-tech', name: 'Technical', color: '#5e72e4', bg: 'bg-[#5e72e4]/10 text-[#5e72e4]' },
-  { id: 'cat-cult', name: 'Cultural', color: '#f5365c', bg: 'bg-[#f5365c]/10 text-[#f5365c]' },
-  { id: 'cat-work', name: 'Workshop', color: '#11cdef', bg: 'bg-[#11cdef]/10 text-[#11cdef]' },
-  { id: 'cat-orien', name: 'Orientation', color: '#2dce89', bg: 'bg-[#2dce89]/10 text-[#2dce89]' },
-  { id: 'cat-sport', name: 'Sports', color: '#fb6340', bg: 'bg-[#fb6340]/10 text-[#fb6340]' },
-  { id: 'cat-sem', name: 'Seminar', color: '#8965e0', bg: 'bg-[#8965e0]/10 text-[#8965e0]' }
+export const CGC_CATEGORIES: CampusCategory[] = [
+  { id: 'all', name: 'All Locations', color: '#5e72e4', bg: 'bg-[#5e72e4]/10' },
+  { id: 'Academic Blocks', name: 'Academic Blocks', color: '#5e72e4', bg: 'bg-[#5e72e4]/10' },
+  { id: 'Food & Dining', name: 'Food & Dining', color: '#f5365c', bg: 'bg-[#f5365c]/10' },
+  { id: 'Grounds & Parks', name: 'Grounds & Parks', color: '#2dce89', bg: 'bg-[#2dce89]/10' },
+  { id: 'Hostels', name: 'Hostels', color: '#8965e0', bg: 'bg-[#8965e0]/10' }
 ];
+
+export const INITIAL_CATEGORIES = CGC_CATEGORIES;
 
 // Curated Poster Themes for Events
 export const POSTER_THEMES: PosterTheme[] = [

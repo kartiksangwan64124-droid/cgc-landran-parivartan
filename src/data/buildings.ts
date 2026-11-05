@@ -1,285 +1,328 @@
 import { CampusBuilding } from '../types';
 
-// Schematic Campus Buildings & Pathway Graph Dataset
-// Architectural schematic coordinates for interactive 3D demonstration
-export const CAMPUS_BUILDINGS: CampusBuilding[] = [
-  {
-    id: 'main-entrance',
-    code: 'GATE-01',
-    name: 'Main Entrance Gate & Visitor Info Plaza',
-    shortName: 'Main Entrance Gate',
-    category: 'Entrance',
-    position: [0, 0, 38],
-    size: [14, 5.5, 4],
-    color: '#5e72e4',
-    accentColor: '#11cdef',
-    floors: 'Ground Level + Security Canopy',
-    hours: 'Open 24/7 (Visitor Desk: 8:00 AM – 6:00 PM)',
-    description:
-      'Primary welcome gateway for school students, freshers, parents, and guests visiting CGC Landran. Houses the Visitor Registration Kiosk, Campus Map Totem, and Security Assistance Desk.',
-    beginnerTip:
-      'Start your campus tour here! Collect your visitor pass at the right-hand kiosk before heading straight up the Central Academic Avenue.',
-    facilities: [
-      'Visitor Pass & Inquiry Kiosk',
-      'Digital Campus Wayfinding Screen',
-      'Security & First-Aid Post',
-      'Shuttle Pick-up & Drop-off Zone'
-    ],
-    waypoints: [
-      [0, 0.2, 38],
-      [0, 0.2, 28]
-    ]
-  },
+// CGC LANDRAN EXACT MAP DATABASE
+// Reconstructed precisely from the official CGC Landran Campus Map:
+export const CGC_MAP_BUILDINGS: CampusBuilding[] = [
   {
     id: 'block-1',
     code: 'BLK-01',
-    name: 'Block 1 – Engineering & Technology',
-    shortName: 'Block 1 Engineering',
-    category: 'Academic',
-    position: [-22, 0, 16],
-    size: [14, 10, 10],
+    name: 'Block 1 (Main Academic Block)',
+    shortName: 'Block 1',
+    category: 'Academic Blocks',
+    position: [12, 0, -28],
+    size: [13, 8.5, 12],
+    shape: 'courtyard',
     color: '#5e72e4',
-    accentColor: '#485fe0',
+    accentColor: '#11cdef',
     floors: '4 Floors (G + 3)',
-    hours: '8:30 AM – 5:00 PM (Mon – Sat)',
+    hours: '8:30 AM – 5:00 PM',
     description:
-      'Core engineering academic wing (Chandigarh Engineering College) featuring foundational laboratories, smart lecture theaters, faculty cabins, and the First-Year Student Orientation Helpdesk.',
+      'Premier academic block located right near the Khapar-Banur Road main entrance. Houses the Central Dean Office, First-Year Applied Sciences, Computer Science & Engineering departments, and the main seminar auditoriums.',
     beginnerTip:
-      'Walk straight from the Main Entrance to the First Crossroad, then turn left along West Academic Walk.',
-    facilities: [
-      'Smart Lecture Halls (101–408)',
-      'Mechanical, Civil & Electronics Labs',
-      'First-Year Student Support Cell',
-      'Drinking Water & Student Common Area'
-    ],
-    waypoints: [
-      [-22, 0.2, 16],
-      [-12, 0.2, 16],
-      [0, 0.2, 16]
-    ]
+      'Enter from the Khapar-Banur Road main gate and take the immediate left boulevard. Look for the courtyard building with the signature teal Argon crest.',
+    facilities: ['Dean & Director Secretariat', 'Smart Classrooms (101-140)', 'Central Physics & Chemistry Labs', 'Central Examination Hall'],
+    roadPoint: [10, 0.35, -20]
   },
   {
-    id: 'block-2',
-    code: 'BLK-02',
-    name: 'Block 2 – Management & IT Center',
-    shortName: 'Block 2 Mgmt & IT',
-    category: 'Academic',
-    position: [22, 0, 16],
-    size: [14, 11, 10],
+    id: 'block-6',
+    code: 'BLK-06',
+    name: 'Block 6 (Information Technology & AI)',
+    shortName: 'Block 6',
+    category: 'Academic Blocks',
+    position: [-2, 0, -27],
+    size: [10, 8.0, 9],
+    shape: 'angled',
     color: '#11cdef',
     accentColor: '#0da5c0',
+    floors: '4 Floors (G + 3)',
+    hours: '8:30 AM – 5:30 PM',
+    description:
+      'Dedicated software computing and AI/ML innovation facility. Features high-performance computing clusters, cloud server rooms, and student coding developer circles.',
+    beginnerTip:
+      'Located directly west of Block 1 along the north perimeter avenue, connected via paved walkway to Kalpana Hostel.',
+    facilities: ['Advanced Cloud Computing Lab', 'AI & Machine Learning Hub', 'Software Testing Center', 'Faculty Research Lounge'],
+    roadPoint: [-2, 0.35, -18]
+  },
+  {
+    id: 'kalpana-hostel',
+    code: 'HST-KL',
+    name: 'Kalpana Hostel (Girls Residence)',
+    shortName: 'Kalpana Hostel',
+    category: 'Hostels',
+    position: [-18, 0, -23],
+    size: [12, 9.0, 10],
+    shape: 'hostel',
+    color: '#8965e0',
+    accentColor: '#5e72e4',
     floors: '5 Floors (G + 4)',
-    hours: '8:30 AM – 6:00 PM (Mon – Sat)',
+    hours: 'Resident Access 24/7 (Visitors: 9 AM - 6 PM)',
     description:
-      'Dedicated hub for Computer Science, Information Technology, MBA & Management programs, software development labs, and high-speed computing studios.',
+      'Premier on-campus residence for female students with 24/7 security, high-speed Wi-Fi, reading halls, indoor gym, and in-house mess dining.',
     beginnerTip:
-      'From the Main Entrance, walk up to the First Crossroad and turn right toward the cyan-trimmed glass building.',
-    facilities: [
-      'High-Performance Computing & IT Labs',
-      'Harvard-Style Management Case Amphitheaters',
-      'AI & Coding Club Studio',
-      '200-Seat Technical Seminar Hall'
-    ],
-    waypoints: [
-      [22, 0.2, 16],
-      [12, 0.2, 16],
-      [0, 0.2, 16]
-    ]
+      'Situated in the quiet North-West quadrant right beside the expansive green COE sports ground.',
+    facilities: ['Air-Cooled & AC Rooms', 'Dining Hall & Night Canteen', 'Gymnasium & Badminton Court', 'Resident Warden Office'],
+    roadPoint: [-14, 0.35, -16]
   },
   {
-    id: 'library',
-    code: 'LIB-01',
-    name: 'Central Library & Digital Knowledge Center',
-    shortName: 'Central Library',
-    category: 'Library',
-    position: [-20, 0, -2],
-    size: [13, 9, 11],
+    id: 'coe-ground',
+    code: 'GRD-COE',
+    name: 'COE Ground (Sports Arena)',
+    shortName: 'COE Ground',
+    category: 'Grounds & Parks',
+    position: [-26, 0, -7],
+    size: [18, 0.4, 24],
+    shape: 'turf',
     color: '#2dce89',
-    accentColor: '#24a46d',
-    floors: '3 Floors + Glass Atrium',
-    hours: '8:00 AM – 8:00 PM (Mon – Sat)',
+    accentColor: '#ffffff',
+    floors: 'Open Outdoor Arena',
+    hours: '6:00 AM – 7:30 PM',
     description:
-      'Quiet academic sanctuary equipped with 100,000+ textbook volumes, IEEE/Springer e-journals, digital workstations, and collaborative study pods for students.',
+      'Major open sports field situated between Kalpana Hostel and Block 11/10. Used for football tournaments, cricket leagues, athletics conditioning, and NCC drills.',
     beginnerTip:
-      'Located right beside the Central Campus Plaza on the west side—look for the emerald-accented glass atrium dome.',
-    facilities: [
-      'Digital Repository & E-Journal Terminals',
-      'Silent Reading Hall (350+ Seats)',
-      'Book Bank & Automated Issue Counter',
-      'Group Discussion Rooms'
-    ],
-    waypoints: [
-      [-20, 0.2, -2],
-      [-10, 0.2, -2],
-      [0, 0.2, -2]
-    ]
+      'Walk along the West Avenue between Kalpana Hostel and Block 11 & 10 to access the spectator lawns.',
+    facilities: ['Full-Size Football Pitch', 'Cricket Practice Pitches', 'Spectator Pavilion', 'Floodlight Night Towers'],
+    roadPoint: [-14, 0.35, -4]
   },
   {
-    id: 'auditorium',
-    code: 'AUD-01',
-    name: 'Main Campus Auditorium & Convention Hall',
-    shortName: 'Auditorium',
-    category: 'Auditorium',
-    position: [21, 0, -2],
-    size: [15, 10.5, 13],
-    color: '#fb6340',
-    accentColor: '#ea4c28',
-    floors: 'Main Tier + Balcony Gallery',
-    hours: 'Open During Scheduled Events & Orientations',
+    id: 'block-11-10',
+    code: 'BLK-11-10',
+    name: 'Block 11 and 10 (Engineering Complex)',
+    shortName: 'Block 11 & 10',
+    category: 'Academic Blocks',
+    position: [-38, 0, 1],
+    size: [11, 10.5, 34],
+    shape: 'elongated',
+    color: '#32325d',
+    accentColor: '#5e72e4',
+    floors: '5 Floors (G + 4)',
+    hours: '8:00 AM – 6:00 PM',
     description:
-      'Premier venue for college orientations, cultural festivals, keynote speaker sessions, inter-school competitions, and annual convocation ceremonies.',
+      'The largest academic building on campus spanning the entire western perimeter. Houses Chandigarh Engineering College mechanical workshops, robotics arenas, civil labs, and central research wings.',
     beginnerTip:
-      'Walk straight up Central Avenue to the Central Plaza Fountain and turn right toward the grand orange-accented convention facade.',
-    facilities: [
-      '1,000+ Capacity Acoustical Seating',
-      'Professional Stage Lighting & AV System',
-      'Green Rooms & VIP Hospitality Lounge',
-      'Event Registration Foyer'
-    ],
-    waypoints: [
-      [21, 0.2, -2],
-      [10, 0.2, -2],
-      [0, 0.2, -2]
-    ]
+      'Follow the long West Arterial Road all the way past COE Ground. You cannot miss this massive elongated landmark complex.',
+    facilities: ['Heavy Mechanical Workshops', 'Robotics & Automation Arena', 'Civil CAD & Structural Labs', '2x 300-Seat Amphitheaters'],
+    roadPoint: [-26, 0.35, 6]
+  },
+  {
+    id: 'parivartan-ground',
+    code: 'GRD-PRV',
+    name: 'Parivartan Ground (Cultural & Fest Arena)',
+    shortName: 'Parivartan Ground',
+    category: 'Grounds & Parks',
+    position: [-22, 0, 22],
+    size: [18, 0.4, 20],
+    shape: 'turf',
+    color: '#2dce89',
+    accentColor: '#fb6340',
+    floors: 'Festival Grounds + Grand Stage',
+    hours: 'Open for Events & Student Gatherings',
+    description:
+      'Legendary home of CGC Landran’s annual national fest "PARIVARTAN". Featuring a grand performance stage, expansive manicured lawns, and festival exhibition pavilions.',
+    beginnerTip:
+      'Located at the south-western quadrant past the Count and Block 11/10 walkway.',
+    facilities: ['Concert Main Stage', 'Sound & Light Control Booth', 'Exhibition Stalls Zone', 'Open Air Amphitheater Seating'],
+    roadPoint: [-11, 0.35, 18]
+  },
+  {
+    id: 'count',
+    code: 'ACT-CNT',
+    name: 'Count (Recreation & Court Sports)',
+    shortName: 'Count',
+    category: 'Grounds & Parks',
+    position: [-10, 0, -2],
+    size: [7, 2.5, 7],
+    shape: 'court',
+    color: '#fb6340',
+    accentColor: '#ffd600',
+    floors: 'Synthetic Flooring Court',
+    hours: '6:30 AM – 8:00 PM',
+    description:
+      'Dedicated synthetic court area for basketball, lawn tennis, and student recreational activities. Marked with the prominent orange target icon on the campus map.',
+    beginnerTip:
+      'Located right between the central crossroads and the path leading to COE Ground.',
+    facilities: ['All-Weather Basketball Court', 'Safety Net Enclosure', 'Reflective LED Night Lights', 'Equipment Locker'],
+    roadPoint: [-5, 0.35, -2]
+  },
+  {
+    id: 'sip-n-bit',
+    code: 'FD-SNB',
+    name: 'Sip-n-bit (Central Food Court & Lounge)',
+    shortName: 'Sip-n-bit',
+    category: 'Food & Dining',
+    position: [2, 0, 4],
+    size: [11, 5.0, 12],
+    shape: 'dining',
+    color: '#f5365c',
+    accentColor: '#fb6340',
+    floors: '2 Levels (Food Hall + Rooftop Patio)',
+    hours: '8:00 AM – 9:30 PM (Daily)',
+    description:
+      'The bustling heartbeat of CGC Landran student life. Features multi-cuisine dining outlets, espresso cafes, fast-food counters, and shaded outdoor parasol seating.',
+    beginnerTip:
+      'Centrally located right along the main north-south pedestrian spine opposite Central Park and Herbal Garden.',
+    facilities: ['Subway & Italian Kiosks', 'Traditional Punjabi Thali Counter', 'Outdoor Courtyard Patio', 'Digital Express Kiosks'],
+    roadPoint: [2, 0.35, -2]
+  },
+  {
+    id: 'central-park',
+    code: 'PRK-CTL',
+    name: 'Central Park (Lush Campus Green)',
+    shortName: 'Central Park',
+    category: 'Grounds & Parks',
+    position: [14, 0, -14],
+    size: [16, 0.35, 15],
+    shape: 'park',
+    color: '#2dce89',
+    accentColor: '#11cdef',
+    floors: 'Landscaped Botanical Greenery',
+    hours: 'Open 24/7',
+    description:
+      'Lush green central lawn adorned with flowering shrubs, shaded stone benches, central artistic fountain, and paved circular walking pathways for student relaxation.',
+    beginnerTip:
+      'Located directly in the center of the campus, bordered by Block 1, Block 3, and Sip-n-bit.',
+    facilities: ['Aesthetic Center Fountain', 'Paved Walking Promenade', 'Solar Garden Lights', 'Quiet Study Benches'],
+    roadPoint: [6, 0.35, -12]
   },
   {
     id: 'block-3',
-    code: 'HUB-03',
-    name: 'Innovation & Startup Hub (Incubation Center)',
-    shortName: 'Innovation & Startup Hub',
-    category: 'Academic',
-    position: [-22, 0, -20],
-    size: [14, 9.5, 10],
-    color: '#8965e0',
-    accentColor: '#6f42c1',
-    floors: '4 Floors (G + 3)',
-    hours: '8:30 AM – 6:30 PM (Mon – Sat)',
-    description:
-      'Campus entrepreneurship and research incubation center featuring startup co-working bays, prototyping maker-labs, patent facilitation cell, and pitch arenas.',
-    beginnerTip:
-      'Continue past the Central Library along the northern corridor and turn left at the North Junction.',
-    facilities: [
-      'Student Startup Incubation Pods',
-      'IoT, 3D Printing & Rapid Prototyping Lab',
-      'Intellectual Property & Patent Cell',
-      'Investor Pitch & Mentorship Boardroom'
-    ],
-    waypoints: [
-      [-22, 0.2, -20],
-      [-11, 0.2, -20],
-      [0, 0.2, -20]
-    ]
-  },
-  {
-    id: 'block-4',
-    code: 'ADM-04',
-    name: 'Central Administrative Block (Admin & Admissions)',
-    shortName: 'Admin Block',
-    category: 'Academic',
-    position: [22, 0, -20],
-    size: [14, 9.5, 10],
+    code: 'BLK-03',
+    name: 'Block 3 (Applied Management & Commerce)',
+    shortName: 'Block 3',
+    category: 'Academic Blocks',
+    position: [31, 0, -17],
+    size: [15, 8.5, 9],
+    shape: 'academic',
     color: '#5e72e4',
-    accentColor: '#825ee4',
+    accentColor: '#2dce89',
     floors: '4 Floors (G + 3)',
-    hours: '9:00 AM – 5:00 PM (Mon – Sat)',
+    hours: '8:30 AM – 5:00 PM',
     description:
-      'Central administrative headquarters housing the Admissions Counseling Hall, Registrar Office, Student Welfare Wing, Accounts Counter, and Placement Cell.',
+      'Major academic block on the East Avenue. Houses MBA, BBA, B.Com classrooms, corporate boardroom simulators, and the CGC Landran Finance Center.',
     beginnerTip:
-      'Walk past the Main Auditorium along the central boulevard and turn right at the North Junction.',
-    facilities: [
-      'New Student Admissions & Counseling Lounge',
-      'Central Placement & Corporate Relations Cell',
-      'Registrar, Scholarship & Fee Helpdesk',
-      'International Student Affairs Office'
-    ],
-    waypoints: [
-      [22, 0.2, -20],
-      [11, 0.2, -20],
-      [0, 0.2, -20]
-    ]
+      'Walk east along the promenade past Central Park. Block 3 is situated directly north of CDX and Tagore Block.',
+    facilities: ['Stock Trading Simulation Lab', 'Corporate Interview Rooms', 'Business Library Annex', 'Faculty Research Chambers'],
+    roadPoint: [21, 0.35, -12]
   },
   {
-    id: 'cafeteria',
-    code: 'CAF-01',
-    name: 'Student Cafeteria & Multi-Cuisine Food Court',
-    shortName: 'Student Cafeteria',
-    category: 'Cafeteria',
-    position: [-14, 0, -35],
-    size: [13, 6, 9],
-    color: '#f5365c',
-    accentColor: '#d9254b',
-    floors: 'Ground Indoor Hall + Outdoor Patio',
-    hours: '8:00 AM – 7:30 PM (Daily)',
-    description:
-      'Vibrant student hangout hub offering hygienic meals, snacks, beverages, bakery counters, and shaded outdoor courtyard tables.',
-    beginnerTip:
-      'Follow the Central Avenue straight toward the north end of the campus; you will spot the red-trimmed food court plaza on your left.',
-    facilities: [
-      'Multi-Cuisine Hot Meal Counters',
-      'Juice, Coffee & Bakery Kiosks',
-      'Digital Token & UPI Express Billing',
-      'Shaded Outdoor Garden Seating'
-    ],
-    waypoints: [
-      [-14, 0.2, -35],
-      [0, 0.2, -35],
-      [0, 0.2, -20]
-    ]
-  },
-  {
-    id: 'sports',
-    code: 'SPT-01',
-    name: 'Sports Complex & Athletics Stadium',
-    shortName: 'Sports Complex & Stadium',
-    category: 'Sports',
-    position: [18, 0, -36],
-    size: [20, 4.5, 14],
-    color: '#2dce89',
+    id: 'cdx',
+    code: 'FD-CDX',
+    name: 'CDX (Cafe, Bakery & Student Express)',
+    shortName: 'CDX',
+    category: 'Food & Dining',
+    position: [21, 0, -3],
+    size: [8, 4.5, 8],
+    shape: 'cafe',
+    color: '#fb6340',
     accentColor: '#11cdef',
-    floors: 'Outdoor Turf + Indoor Pavilion',
-    hours: '6:00 AM – 7:00 PM (Daily)',
+    floors: 'Single Level Cafe Pavilion',
+    hours: '8:30 AM – 8:30 PM',
     description:
-      'Expansive athletics arena featuring a multi-purpose sports turf, basketball and volleyball courts, athletics track, and indoor table-tennis & fitness pavilion.',
+      'Popular eastern campus cafe hub featuring freshly baked pastries, specialty coffee, smoothies, and quick snacks right next to Block 4 Tagore Block.',
     beginnerTip:
-      'Located at the north-east corner of the campus opposite the Student Cafeteria.',
-    facilities: [
-      'Athletics Track & Football Stadium Turf',
-      'Floodlit Basketball & Volleyball Courts',
-      'Indoor Badminton & Fitness Center',
-      'Spectator Pavilion & Locker Rooms'
-    ],
-    waypoints: [
-      [18, 0.2, -36],
-      [0, 0.2, -35],
-      [0, 0.2, -20]
-    ]
+      'Nestled between Central Park, Block 4 Tagore Block, and Basera Hostel. Look for the yellow coffee marker!',
+    facilities: ['Barista Coffee Counter', 'Bakery & Dessert Section', 'Co-Working Counter Benches', 'Phone Charging Bar'],
+    roadPoint: [14, 0.35, -2]
   },
   {
-    id: 'parking',
-    code: 'PRK-01',
-    name: 'Campus Parking Zone (Visitor & Bus Bays)',
-    shortName: 'Campus Parking Zone',
-    category: 'Parking',
-    position: [25, 0, 32],
-    size: [16, 2.2, 10],
-    color: '#8898aa',
-    accentColor: '#525f7f',
-    floors: 'Surface Level Bays',
-    hours: '6:00 AM – 9:00 PM',
+    id: 'block-4-tagore',
+    code: 'BLK-04',
+    name: 'Block 4 Tagore Block (Humanities & Basic Sciences)',
+    shortName: 'Tagore Block',
+    category: 'Academic Blocks',
+    position: [33, 0, -4],
+    size: [10, 8.0, 9],
+    shape: 'academic',
+    color: '#11cdef',
+    accentColor: '#5e72e4',
+    floors: '4 Floors (G + 3)',
+    hours: '8:30 AM – 5:00 PM',
     description:
-      'Organized parking zone right inside the eastern entrance loop with dedicated bays for visitor cars, school buses, two-wheelers, and EV charging points.',
+      'Named in honor of Rabindranath Tagore, this wing houses Department of Basic Sciences, Language Labs, Creative Arts Studio, and Student Grievance Cell.',
     beginnerTip:
-      'Immediately after entering the Main Gate, take the first right turn into the paved parking bays.',
-    facilities: [
-      'Visitor Car & School Bus Bays',
-      'Two-Wheeler Covered Sheds',
-      'EV Charging Kiosk',
-      'Direct Pedestrian Footpath to Main Avenue'
-    ],
-    waypoints: [
-      [25, 0.2, 32],
-      [12, 0.2, 28],
-      [0, 0.2, 28]
-    ]
+      'Directly adjacent to CDX cafe and just north of the Basera Hostel courtyard.',
+    facilities: ['Digital Language Laboratory', 'Fine Arts & Drama Studio', 'Mathematics & Stats Lab', 'Student Council Office'],
+    roadPoint: [24, 0.35, 1]
+  },
+  {
+    id: 'basera-hostel',
+    code: 'HST-BSR',
+    name: 'Basera Hostel (Boys Residence)',
+    shortName: 'Basera Hostel',
+    category: 'Hostels',
+    position: [24, 0, 7],
+    size: [12, 9.0, 9],
+    shape: 'hostel',
+    color: '#8965e0',
+    accentColor: '#11cdef',
+    floors: '5 Floors (G + 4)',
+    hours: 'Resident Access 24/7',
+    description:
+      'Spacious boys’ residential facility with dedicated study halls, sports equipment rental, high-speed campus intranet, and mess facility.',
+    beginnerTip:
+      'Located directly south of CDX and overlooking the serene Herbel Garden on its southern flank.',
+    facilities: ['Spacious 2/3 Seater Rooms', 'Indoor Table Tennis Room', 'Common Television Lounge', 'Medical First-Aid Room'],
+    roadPoint: [15, 0.35, 7]
+  },
+  {
+    id: 'herbel-garden',
+    code: 'GRD-HRB',
+    name: 'Herbel Garden (Botanical & Medicinal Flora)',
+    shortName: 'Herbel Garden',
+    category: 'Grounds & Parks',
+    position: [18, 0, 19],
+    size: [13, 0.35, 11],
+    shape: 'park',
+    color: '#2dce89',
+    accentColor: '#8965e0',
+    floors: 'Medicinal Flora & Nursery',
+    hours: '7:00 AM – 6:30 PM',
+    description:
+      'Specialized botanical sanctuary curated with over 150+ species of Ayurvedic, herbal, and therapeutic plants utilized by Pharmacy and Biotechnology students.',
+    beginnerTip:
+      'Walk south past Basera Hostel. A tranquil green oasis perfect for calm reflection and botanical study.',
+    facilities: ['Ayurvedic Medicinal Beds', 'Greenhouse Plant Nursery', 'Paved Cobblestone Trails', 'Botanical Info Plates'],
+    roadPoint: [12, 0.35, 18]
+  },
+  {
+    id: 'santhikunj-hostel',
+    code: 'HST-SKJ',
+    name: 'Santhikunj Hostel (Senior Student Residence)',
+    shortName: 'Santhikunj Hostel',
+    category: 'Hostels',
+    position: [14, 0, 31],
+    size: [13, 8.5, 8],
+    shape: 'hostel',
+    color: '#8965e0',
+    accentColor: '#f5365c',
+    floors: '4 Floors (G + 3)',
+    hours: 'Resident Access 24/7',
+    description:
+      'Peaceful residential quarters located at the quiet southern edge of the campus, featuring dedicated study wings for senior year and postgraduate scholars.',
+    beginnerTip:
+      'Located at the south-most end of the campus, past Herbel Garden and adjacent to the Thomson Block loop.',
+    facilities: ['Single & Double Occupancy', 'Silent Study Floor', 'High-Speed LAN Ports', 'Dining Hall Annex'],
+    roadPoint: [10, 0.35, 27]
+  },
+  {
+    id: 'block-8-thomson',
+    code: 'BLK-08',
+    name: 'Block 8 Thomson Block (Pharmacy & Biotech Wings)',
+    shortName: 'Thomson Block',
+    category: 'Academic Blocks',
+    position: [29, 0, 26],
+    size: [15, 9.5, 16],
+    shape: 'twin',
+    color: '#172b4d',
+    accentColor: '#fb6340',
+    floors: '5 Floors (G + 4 Twin Blocks)',
+    hours: '8:30 AM – 5:30 PM',
+    description:
+      'Prestigious research-driven twin academic block (Block 8) dedicated to Chandigarh College of Pharmacy and Applied Biotechnology. Characterized by two parallel long blocks joined by an elevated skybridge walkway.',
+    beginnerTip:
+      'Located on the South-East corner of campus right across from Santhikunj Hostel and Herbel Garden.',
+    facilities: ['Formulation & Pharmaceutics Labs', 'Microbiology Clean Rooms', 'Biotech Animal Cell Culture Lab', '200-Seat Seminar Auditorium'],
+    roadPoint: [22, 0.35, 25]
   }
 ];
+
+export const CAMPUS_BUILDINGS = CGC_MAP_BUILDINGS;
